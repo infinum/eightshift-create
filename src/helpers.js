@@ -212,11 +212,6 @@ export const checkRequirements = async () => {
  * @param {object} config Configuration object.
  */
 export const alertBox = (msg, title, type = 'info', config = {}) => {
-	// If in a test environment, skip the prompt.
-	if (typeof jest !== 'undefined') {
-		return `[${type.toUpperCase()}] ${title}: ${msg}`;
-	}
-
 	let autoTitle = '';
 
 	const colorText = (input, bold = false) => {
