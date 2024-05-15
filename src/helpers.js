@@ -29,20 +29,20 @@ const installComposerPackage = async (projectPath, packageToInstall) => {
 /**
  * Check Node.js version
  */
-const checkNodeVersion = async () => exec(`node -v`);
+const checkNodeVersion = async () => exec('node -v');
 /**
  * Check Composer version
  */
-const checkComposerVersion = async () => exec(`composer -v`);
+const checkComposerVersion = async () => exec('composer -v');
 /**
  * Check WP-CLI version
  */
-const checkWPCliVersion = async () => exec(`wp --info`);
+const checkWPCliVersion = async () => exec('wp --info');
 
 /**
  * Check Git version
  */
-const checkGitVersion = async () => exec(`git --version`);
+const checkGitVersion = async () => exec('git --version');
 
 //-------------------------------------------------------
 // Exports
@@ -135,7 +135,7 @@ export const writeIntro = () => {
 export const checkIsSetupExists = (folderPath, type) => {
 	if (existsSync(folderPath)) {
 		console.log('');
-		error(`It looks like your all-ready have a setup ${type} in your project on path ${folderPath}. Please remove it and try again.`);
+		error(`It looks like you already have a setup ${type} in your project on path ${folderPath}. Please remove it and try again.`);
 		process.exit(1);
 	}
 }
@@ -311,7 +311,7 @@ export const outputSetupMessage = (type, args) => {
 		params += ` --g_frontend_libs_version='${args.frontendLibsRepoBranch}'`;
 	}
 
-	let msg = 'To finish your setup please run one the following commands:\n\n';
+	let msg = 'To finish your setup please run one of the following commands:\n\n';
 
 	msg += `Setup ${type} fast:\n`;
 	msg += chalk.blue.bold(`wp boilerplate init ${type}-setup${params} --prompt='g_project_name'`);
