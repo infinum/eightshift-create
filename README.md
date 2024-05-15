@@ -18,80 +18,40 @@ Make sure that you have all these packages installed and ready to use on your sy
 
 If it doesn't return any errors, you are good to go.
 
-## Installation
+## Installation theme
 
-Navigate to your WordPress theme folder and run the following command:
+Navigate to any folder in your WordPress project where you want to install a new theme and run this command:
 
-`npx create-wp-project`
+`npx eightshift-create theme`
 
-The script will prompt you for a theme name, local development URL (used for BrowserSync) and project description. After that, your new theme will be installed.
+The script will install the latest version of the Setup script and run it. After the script is finished, please follow the instructions provided by the setup script.
 
-After the script is finished, please follow the instructions provided by the setup script.
+## Installation plugin
 
-All additional steps after the initial setup are done using WP_CLI commands, so please make sure that you have WP-CLI set and ready to use.
+Navigate to any folder in your WordPress project where you want to install a new plugin and run this command:
 
-To make sure you use the latest version of npx command you can add `@latest` flag to the command:
+`npx eightshift-create plugin`
 
-`npx create-wp-project@latest`
+The script will install the latest version of the Setup script and run it. After the script is finished, please follow the instructions provided by the setup script.
 
 ## Specify version to create
 
-If you want to specify a version of Eightshift Libs or Frontend Libs to use, you can use add two additional attributes to this command to specify a branch or release to use:
+If you want to specify some custom version for the packages you can use the following flags. 
 
 ```
---eightshiftLibsBranch
---eightshiftFrontendLibsBranch
-```
-
-Example:
-If you want to pull the develop branch of the Eightshift Frontend libs and a specific release of the Eightshift Libs:
-
-```
-npx create-wp-project --eightshiftLibsBranch="release/6.0.0" --eightshiftFrontendLibsBranch="develop"
-```
-
-You can also specify the version of the create-wp-project script like this:
-
-```
-npx create-wp-project@2.0.12 --eightshiftLibsBranch="release/6.0.0" --eightshiftFrontendLibsBranch="develop"
-```
-
-
-## Use a different repository
-
-If you want to specify a different repository from where to pull the boilerplate installation, you can use an additional attribute to this command to specify which git repository to use:
-
-```
---eightshiftBoilerplateRepo
---eightshiftBoilerplateBranch
-```
-
-Example:
-If you want to pull the develop branch of the Eightshift Frontend libs and a specific release of the Eightshift Libs:
-
-
-```
-npx create-wp-project --eightshiftBoilerplateRepo="https://github.com/example-repository/eightshift-boilerplate.git"
-```
-
-You can also specify which branch to use like this:
-
-
-```
-npx create-wp-project --eightshiftBoilerplateRepo="https://github.com/example-repository/eightshift-boilerplate.git" --eightshiftBoilerplateBranch="develop"
+--setupRepoUrl
+--setupRepoBranch
+--libsRepoBranch
+--frontendLibsRepoBranch
 ```
 
 You can get a list of available script arguments by running:
 
-`npx create-wp-project --help`
-
+`npx eightshift-create --help`
 
 ## Development
 
-To do any development on the actual setup script you can run it locally by using this command:
+To do any development on the actual setup script you can run it locally by providing the full path to the script.
 
-```
-npm run develop
-```
-
-This command will run the script from the code directly and it will output the theme/plugin to the setup folder.
+`/<pwd_path>/eightshift-create.js theme`
+`/<pwd_path>/eightshift-create.js plugin`
