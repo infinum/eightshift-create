@@ -8,4 +8,4 @@ This projects adheres to [Semantic Versioning](https://semver.org/) and [Keep a 
 
 Initial tagged release.
 
-[Unreleased]: https://github.com/infinum/eightshift-boilerplate-plugin/compare/master...HEAD
+[Unreleased]: https://github.com/infinum/eightshift-create/compare/master...HEAD
