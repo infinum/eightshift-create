@@ -18,7 +18,7 @@ Make sure that you have all these packages installed and ready to use on your sy
 
 If it doesn't return any errors, you are good to go.
 
-## Installation theme
+## Theme installation
 
 Navigate to any folder in your WordPress project where you want to install a new theme and run this command:
 
@@ -26,7 +26,7 @@ Navigate to any folder in your WordPress project where you want to install a new
 
 The script will install the latest version of the Setup script and run it. After the script is finished, please follow the instructions provided by the setup script.
 
-## Installation plugin
+## Plugin installation
 
 Navigate to any folder in your WordPress project where you want to install a new plugin and run this command:
 
