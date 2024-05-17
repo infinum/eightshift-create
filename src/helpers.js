@@ -154,18 +154,18 @@ export const installStep = async ({ describe, thisHappens, isFatal = true }) => 
 		throw new Error(`Missing 'thisHappens' parameter for step ${describe}, don't know what needs to be done at this step, aborting.`);
 	}
 
-	await thisHappens.then(() => {
+	try {
+		await thisHappens();
 		spinner.succeed();
-	}).catch((exception) => {
+	} catch (exception) {
 		console.log(exception);
 		spinner.fail();
 		error(exception);
-
+		
 		if (isFatal) {
-			error(`'${describe}' was a required step, exiting.`);
-			process.exit(1);
+			error(`'${describe}' was a required step, exiting.`); process.exit(1);
 		}
-	});
+	}
 };
 
 /**
