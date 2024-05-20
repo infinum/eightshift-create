@@ -155,7 +155,7 @@ export const installStep = async ({ describe, thisHappens, isFatal = true }) => 
 	}
 
 	try {
-		await thisHappens();
+		await thisHappens;
 		spinner.succeed();
 	} catch (exception) {
 		console.log(exception);
