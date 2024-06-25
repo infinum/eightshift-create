@@ -17,12 +17,8 @@ yargs(hideBin(process.argv))
 			describe: 'Use this to override which infinum/eightshift-boilerplate branch is loaded (mainly used for testing).',
 			default: 'main'
 		})
-		.positional('libsRepoBranch', {
-			describe: 'Use this to override which infinum/eightshift-libs branch is loaded (mainly used for testing).',
-			default: ''
-		})
-		.positional('frontendLibsRepoBranch', {
-			describe: 'Use this to override which infinum/eightshift-frontend-libs branch is loaded (mainly used for testing).',
+		.positional('setupLibsRepoBranch', {
+			describe: 'Use this to override which infinum/eightshift-libs branch is loaded in the setup before the theme is created (mainly used for testing).',
 			default: ''
 		})
 }, (args) => {
@@ -42,12 +38,8 @@ yargs(hideBin(process.argv))
 			describe: 'Use this to override which infinum/eightshift-boilerplate-plugin branch is loaded (mainly used for testing).',
 			default: 'main'
 		})
-		.positional('libsRepoBranch', {
-			describe: 'Use this to override which infinum/eightshift-libs branch is loaded (mainly used for testing).',
-			default: ''
-		})
-		.positional('frontendLibsRepoBranch', {
-			describe: 'Use this to override which infinum/eightshift-frontend-libs branch is loaded (mainly used for testing).',
+		.positional('setupLibsRepoBranch', {
+			describe: 'Use this to override which infinum/eightshift-libs branch is loaded in the setup before the plugin is created (mainly used for testing).',
 			default: ''
 		})
 }, (args) => {

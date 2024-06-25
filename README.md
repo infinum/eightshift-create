@@ -41,8 +41,7 @@ If you want to specify some custom version for the packages you can use the foll
 ```
 --setupRepoUrl
 --setupRepoBranch
---libsRepoBranch
---frontendLibsRepoBranch
+--setupLibsRepoBranch
 ```
 
 You can get a list of available script arguments by running:
