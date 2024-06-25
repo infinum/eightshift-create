@@ -27,7 +27,7 @@ export const themeCommand = async (args) => {
 	writeIntro();
 
 	// Check if the setup already exists.
-	checkIsSetupExists(outputPath, 'theme');
+	checkIsSetupExists(outputPath);
 
 	// Check if all requirements are installed
 	await installStep({
@@ -55,8 +55,8 @@ export const themeCommand = async (args) => {
 	// Install all composer packages.
 	await installStep({
 		describe: `Installing boilerplate setup Composer packages`,
-		thisHappens: installComposerDependencies(outputPath, args.libsRepoBranch),
+		thisHappens: installComposerDependencies(outputPath, args.setupLibsRepoBranch),
 	});
 
-	outputSetupMessage('theme', args);
+	outputSetupMessage('theme');
 }

@@ -4,6 +4,7 @@ import { join, dirname } from 'path';
 import { existsSync } from 'fs';
 import { exec } from 'promisify-child-process';
 import ora from 'ora';
+import inquirer from 'inquirer';
 
 //-------------------------------------------------------
 // Helpers
@@ -43,6 +44,8 @@ const checkWPCliVersion = async () => exec('wp --info');
  * Check Git version
  */
 const checkGitVersion = async () => exec('git --version');
+
+
 
 //-------------------------------------------------------
 // Exports
@@ -130,13 +133,10 @@ export const writeIntro = () => {
  * Checks if the setup already exists.
  *
  * @param {string} folderPath Path to the folder.
- * @param {string} type Type of the setup.
  */
-export const checkIsSetupExists = (folderPath, type) => {
+export const checkIsSetupExists = (folderPath) => {
 	if (existsSync(folderPath)) {
-		console.log('');
-		error(`It looks like you already have a setup ${type} in your project on path ${folderPath}. Please remove it and try again.`);
-		process.exit(1);
+		exec(`rm -rf ${folderPath}`);
 	}
 }
 
@@ -298,30 +298,102 @@ export const wpPluginActivate = async (name) => exec(`wp plugin activate ${name}
  * Outputs the setup message.
  *
  * @param {string} type Type of the setup.
- * @param {object} args Arguments passed to the command.
  */
-export const outputSetupMessage = (type, args) => {
-	let params = '';
+export const outputSetupMessage = (type) => {
+	console.log('');
+	inquirer
+		.prompt([
+			{
+				name: 'setupType',
+				type: 'list',
+				message: 'Select what type of setup you want to use:',
+				choices: [
+					{
+						name: 'Simple fast setup',
+						value: 'fast',
+					},
+					{
+						name: 'Extended setup',
+						value: 'extended',
+					},
+				],
+			},
+			{
+				name: 'frontendLibsType',
+				type: 'list',
+				message: 'Select what type of project you want to create:',
+				choices: [
+					{
+						name: 'Tailwind setup',
+						value: 'tailwind',
+					},
+					{
+						name: 'Standard setup',
+						value: 'standard',
+					},
+				],
+			},
+			{
+				name: 'projectName',
+				type: 'input',
+				message: 'Enter a project name:',
+				validate: (value) => {
+					if (value.length) {
+						return true;
+					}
+	
+					return 'Please enter a project name!';
+				}
+			},
+			{
+				name: 'libsVersion',
+				type: 'input',
+				message: 'Enter Eightshift Libs version:',
+				when: (answers) => answers.setupType === 'extended',
+			},
+			{
+				name: 'frontendLibsVersion',
+				type: 'input',
+				message: 'Enter Eightshift Frontend Libs version:',
+				when: (answers) => answers.setupType === 'extended',
+			},
+		])
+		.then(({
+			frontendLibsType,
+			projectName,
+			libsVersion,
+			frontendLibsVersion,
+		}) => {
+			let params = '';
 
-	if (args.libsRepoBranch) {
-		params += ` --g_libs_version='${args.libsRepoBranch}'`;
-	}
+			if (libsVersion) {
+				params += ` --g_libs_version='${libsVersion}'`;
+			}
 
-	if (args.frontendLibsRepoBranch) {
-		params += ` --g_frontend_libs_version='${args.frontendLibsRepoBranch}'`;
-	}
+			if (frontendLibsVersion) {
+				params += ` --g_frontend_libs_version='${frontendLibsVersion}'`;
+			}
 
-	let msg = 'To finish your setup please run one of the following commands:\n\n';
+			if (frontendLibsType === 'tailwind') {
+				params += ` --g_frontend_libs_type='${frontendLibsType}'`;
+			}
 
-	msg += `Setup ${type} fast:\n`;
-	msg += chalk.blue.bold(`wp boilerplate init ${type}-setup${params} --prompt='g_project_name'`);
-	msg += `\n\nor setup ${type} full:\n`;
-	msg += chalk.blue.bold(`wp boilerplate init ${type}-setup${params} --prompt='g_project_name,g_project_description,g_project_author,g_project_author_url'`);
+			if (projectName) {
+				params += ` --g_project_name='${projectName}'`;
+			}
 
-	alertBox(
-		msg,
-		'Boilerplate setup is ready for you! 🚀',
-		'success',
-		{ omitLastLine: false }
-	);
+			const msg = chalk.cyan.bold(`wp boilerplate init ${type}-setup${params}`);
+
+			alertBox(
+				'To finish your setup please run one of the following command:',
+				'Boilerplate setup is ready for you! 🚀',
+				'success',
+				{ omitLastLine: false }
+			);
+
+			console.log(msg);
+		})
+		.catch((error) => {
+			console.log(error);
+		});
 }
