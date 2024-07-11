@@ -301,6 +301,8 @@ export const wpPluginActivate = async (name) => exec(`wp plugin activate ${name}
  */
 export const outputSetupMessage = (type) => {
 	console.log('');
+	console.log(chalk.cyan.bold('-----------------------------------------------------------------'));
+	console.log('');
 	inquirer
 		.prompt([
 			{
@@ -309,12 +311,16 @@ export const outputSetupMessage = (type) => {
 				message: 'Select what type of setup you want to use:',
 				choices: [
 					{
-						name: 'Simple fast setup',
+						name: 'Simple fast setup (minimal options)',
 						value: 'fast',
 					},
 					{
-						name: 'Extended setup',
+						name: 'Extended setup (configure packages versions)',
 						value: 'extended',
+					},
+					{
+						name: 'Manual setup (configure everything manually)',
+						value: 'manual',
 					},
 				],
 			},
@@ -322,6 +328,7 @@ export const outputSetupMessage = (type) => {
 				name: 'frontendLibsType',
 				type: 'list',
 				message: 'Select what type of project you want to create:',
+				when: (answers) => answers.setupType !== 'manual',
 				choices: [
 					{
 						name: 'Tailwind setup',
@@ -337,6 +344,7 @@ export const outputSetupMessage = (type) => {
 				name: 'projectName',
 				type: 'input',
 				message: 'Enter a project name:',
+				when: (answers) => answers.setupType !== 'manual',
 				validate: (value) => {
 					if (value.length) {
 						return true;
@@ -359,6 +367,7 @@ export const outputSetupMessage = (type) => {
 			},
 		])
 		.then(({
+			setupType,
 			frontendLibsType,
 			projectName,
 			libsVersion,
@@ -382,16 +391,32 @@ export const outputSetupMessage = (type) => {
 				params += ` --g_project_name='${projectName}'`;
 			}
 
-			const msg = chalk.cyan.bold(`wp boilerplate init ${type}-setup${params}`);
+			console.log('');
+			console.log(chalk.cyan.bold('-----------------------------------------------------------------'));
+			console.log('');
 
-			alertBox(
-				'To finish your setup please run one of the following command:',
-				'Boilerplate setup is ready for you! 🚀',
-				'success',
-				{ omitLastLine: false }
-			);
+			if (setupType === 'fast' || setupType === 'extended') {
+				alertBox(
+					'To finish your setup please run one of the following command:',
+					'Boilerplate setup is ready for you! 🚀',
+					'success',
+					{ omitLastLine: false }
+				);
 
-			console.log(msg);
+				console.log('');
+				console.log(chalk.cyan.bold(`wp boilerplate init ${type}-setup${params}`));
+			}
+
+			if (setupType === 'manual') {
+				alertBox(
+					'To finish your setup please type your commands manually',
+					'Boilerplate setup is ready for you! 🚀',
+					'success',
+					{ omitLastLine: false }
+				);
+			}
+
+			console.log('');
 		})
 		.catch((error) => {
 			console.log(error);

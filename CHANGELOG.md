@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This projects adheres to [Semantic Versioning](https://semver.org/) and [Keep a CHANGELOG](https://keepachangelog.com/).
 
+## [1.1.1]
+
+### Added
+- manual setup command.
+
+
 ## [1.1.0]
 
 ### Added
@@ -21,5 +27,6 @@ This projects adheres to [Semantic Versioning](https://semver.org/) and [Keep a 
 
 Initial tagged release.
 
+[1.1.1]: https://github.com/infinum/eightshift-create/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/infinum/eightshift-create/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/infinum/eightshift-create/releases/tag/1.0.0
