@@ -9,7 +9,6 @@ This projects adheres to [Semantic Versioning](https://semver.org/) and [Keep a 
 ### Added
 - manual setup command.
 
-
 ## [1.1.0]
 
 ### Added
