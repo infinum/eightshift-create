@@ -306,6 +306,11 @@ export const outputSetupMessage = (type) => {
 	inquirer
 		.prompt([
 			{
+				name: 'initialWarning',
+				type: 'confirm',
+				message: 'Please make sure you temporarily deactivate any Eightshift plugins or themes before running the setup. Do you want to continue?',
+			},
+			{
 				name: 'setupType',
 				type: 'list',
 				message: 'Select what type of setup you want to use:',
@@ -337,6 +342,10 @@ export const outputSetupMessage = (type) => {
 					{
 						name: 'Standard setup',
 						value: 'standard',
+					},
+					{
+						name: 'Clean setup (no blocks, no styles, no scripts)',
+						value: 'clean',
 					},
 				],
 			},
@@ -404,7 +413,20 @@ export const outputSetupMessage = (type) => {
 				);
 
 				console.log('');
-				console.log(chalk.cyan.bold(`wp boilerplate init ${type}-setup${params}`));
+
+				if (type === 'plugin') {
+					if (frontendLibsType === 'clean') {
+						console.log(chalk.cyan.bold(`wp boilerplate-plugin init-setup plugin-clean${params}`));
+					} else {
+						console.log(chalk.cyan.bold(`wp boilerplate-plugin init-setup plugin${params}`));
+					}
+				} else {
+					if (frontendLibsType === 'clean') {
+						console.log(chalk.cyan.bold(`wp boilerplate init-setup theme-clean${params}`));
+					} else {
+						console.log(chalk.cyan.bold(`wp boilerplate init-setup theme${params}`));
+					}
+				}
 			}
 
 			if (setupType === 'manual') {
